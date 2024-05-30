@@ -1,0 +1,397 @@
+#include<iostream>
+#include<conio.h>
+#include<string>
+#include<fstream>
+using namespace std;
+class Date
+{
+private:
+int month;
+int day;
+int year;
+public:
+Date(int day = 0, int month = 0, int year = 0) //Parameterized Constructor of Date
+class.
+{
+this->day = day;
+this->month = month;
+this->year = year;
+}
+void DOB() //Function to get Dob of user and Sportsmen later on.
+{
+cout << "ENTER DATE OF BIRTH:- ";
+cout << "\nEnter day : ";
+cin >> day;
+cout << "Enter month : ";
+cin >> month;
+cout << "Enter year : ";
+cin >> year;
+while (day < 0 || day > 31 || month < 0 || month > 12 || year < 0 || year >
+2022)
+{
+cout << "Error!!! Wrong input, enter again....." << endl;
+cout << "\nEnter day : ";
+cin >> day;
+cout << "Enter month : ";
+cin >> month;
+cout << "Enter year : ";
+cin >> year;
+}
+}
+//GET FUNCTIONS OF CLASS DATE
+//int getday()
+//{
+//return day;
+//}
+//int getmonth()
+//{
+//return month;
+//}
+//int getyear()
+//{
+//return year;
+//}
+void showdate() //print date
+{
+cout << "DOB :" << day << "/" << month << "/" << year;
+}
+}; //end of class Date
+class info
+{
+protected:
+string firstname;
+string lastname;
+char gCheck;
+string gender;
+string email;
+char tCheck;
+string currentteam;
+char cCheck;
+string personalcoach;
+string country;
+Date dob; //use of Composition.
+string CNIC; //unique identity of sportsmen.
+public:
+info() {}; //Default Constructor
+info(string fn, string ln, char gender, string email, char currentteam, char
+coach, string country, Date dob, char gCheck, char tCheck, char cCheck, string cnic)
+//Parameterized constructor
+{
+this->firstname = fn;
+this->lastname = ln;
+this->gender = gender;
+this->email = email;
+this->currentteam = currentteam;
+this->personalcoach = coach;
+this->country = country;
+this->dob = dob;
+this->gCheck = gCheck;
+this->tCheck = tCheck;
+this->cCheck = cCheck;
+this->CNIC = cnic;
+}
+void email_user() //to get email from user in the beginning for creating account.
+{
+cout << "Enter your e-mail : ";
+cin >> email;
+}
+//GET FUNCTIONS OF CLASS SPORTSMEN
+//string getfirstname()
+//{
+//return firstname;
+//}
+//string getlastname()
+//{
+//return lastname;
+//}
+//string getgender()
+//{
+//return gender;
+//}
+string getemail()
+{
+return email;
+}
+//string getcurrentteam()
+//{
+//return currentteam;
+//}
+//string getcoach()
+//{
+//return personalcoach;
+//}
+void account() //Function to signup for account to use application further.
+{
+cout << "\t\t\t\t~WELCOME TO SPORTS PAL~";
+cout << "\n\nTO BEGIN YOU MUST SIGNUP FIRST\n";
+email_user();
+dob.DOB();
+cout << "\nYour email is: " << getemail() << endl;
+dob.showdate();
+cout << "\nYOU HAVE SUCCESSFULLY MADE AN ACCOUNT ON SPORTS PAL.\t WELCOME
+:)\n\n\n\n";
+}
+void input() //Function to get sportsman's data from user
+{
+cout << "Enter First name: ";
+cin >> firstname;
+cout << "Enter Last name: ";
+cin >> lastname;
+cout << "Enter Country: ";
+cin >> country;
+cout << "Enter CNIC: ";
+cin >> CNIC;
+cout << "Enter gender(M for male,F for female):" << endl;
+cin >> gCheck;
+if (gCheck != 'M' && gCheck != 'F' && gCheck != 'm' && gCheck != 'f')
+{
+cout << "Error!!! Wrong input, enter again....." << endl;
+cin >> gCheck;
+}
+if (gCheck == 'M' || gCheck == 'm')
+{
+gender = "Male";
+}
+if (gCheck == 'F' || gCheck == 'f')
+{
+gender = "Female";
+}
+dob.DOB();
+cout << "Enter e-mail: " << endl;
+cin >> email;
+cout << "Any current team?(Y for yes,N for no)";
+cin >> tCheck;
+if (tCheck == 'Y' || tCheck == 'y')
+{
+cout << "Enter name of your current team: ";
+cin >> currentteam;
+}
+else if (tCheck == 'N' || tCheck == 'n')
+{
+cout << "No current team." << endl;
+}
+cout << "Do you have any personal coach?(Y for yes,N for no)";
+cin >> cCheck;
+if (cCheck == 'Y' || cCheck == 'y')
+{
+cout << "Enter name of your personal coach: ";
+cin >> personalcoach;
+}
+else if (cCheck == 'N' || cCheck == 'n')
+{
+cout << "No personal coach." << endl;
+}
+ofstream fileData("Sports.txt", ios::out);
+fileData << " " << firstname << " " << lastname << " " << country << " " <<
+gender << " " << CNIC << " " << email << " " << currentteam << " " << personalcoach;
+fileData.close();
+}
+void print() //Function to print all data of sportsman which is entered by user
+only.
+{
+cout << "\n\nFirst name= " << firstname;
+cout << "\nLast name= " << lastname;
+cout << "\nCNIC= " << CNIC;
+cout << "\nGender= " << gender;
+cout << "\nE-mail= " << email;
+cout << "\nCurrent team= " << currentteam;
+cout << "\nPersonal coach= " << personalcoach;
+cout << endl;
+}
+}; //end of class Sportsmen.
+class database : public info
+{
+public:
+void modify() // Function to Modify Sportsmen Details if ID matches with Cnic of
+existing sportsmen data in file.
+{
+fstream file;
+int count = 0;
+string ID;
+cout << "Enter CNIC of sportsmen you want to modify: ";
+cin >> ID;
+file.open("info.txt", ios::in);
+file >> firstname >> lastname >> country >> gender >> CNIC >> email >>
+currentteam >> personalcoach;
+while (!file.eof())
+{
+if (ID == CNIC)
+{
+input();
+count++;
+break;
+}
+file >> firstname >> lastname >> country >> gender >> CNIC >> email
+>> currentteam >> personalcoach;
+}
+file.close();
+if (count == 0)
+{
+cout << "Invalid CNIC." << endl;
+}
+}
+void search() //Function to search sportsmen data already entered in a file by his
+cnic.
+{
+fstream file;
+int count = 0;
+string ID;
+cout << "Enter CNIC of sportsmen you want to search:";
+cin >> ID;
+file.open("info.txt", ios::in);
+file >> firstname >> lastname >> country >> gender >> CNIC >> email >>
+currentteam >> personalcoach;
+while (!file.eof())
+{
+if (ID == CNIC)
+{
+cout << "\n\nFirst name= " << firstname;
+cout << "\nLast name= " << lastname;
+cout << "\nCNIC= " << CNIC;
+cout << "\nGender= " << gender;
+cout << "\nE-mail= " << email;
+cout << "\nCurrent team= " << currentteam;
+cout << "\nPersonal coach= " << personalcoach;
+cout << endl;
+count++;
+break;
+}
+file >> firstname >> lastname >> country >> gender >> CNIC >> email
+>> currentteam >> personalcoach;
+}
+file.close();
+if (count == 0)
+{
+cout << "Invalid Cnic." << endl;
+}
+}
+void del() //Function to delete data of Sportsmen.
+{
+fstream file, file1;
+string ID;
+cout << "\nEnter CNIC of sportsmen which you want to delete: ";
+cin >> ID;
+file.open("info.txt", ios::in);
+if (!file)
+{
+cout << "\n\t\t\tFile Opening error.." << endl;
+file.close();
+}
+file1.open("info1.txt", ios::out | ios::app);
+file >> firstname >> lastname >> country >> gender >> CNIC >> email >>
+currentteam
+>> personalcoach;
+while (!file.eof())
+{
+if (ID == CNIC)
+{
+cout << "\n\t\t\tSuccessfully Deleted Data" << endl;
+goto p;
+}
+else
+{
+file1 << " " << firstname << " " << lastname << " " << country
+<< " " << gender << " " << CNIC << " " << email << " " << currentteam << " " <<
+personalcoach;
+}
+file >> firstname >> lastname >> country >> gender >> CNIC >> email
+>>
+currentteam >> personalcoach;
+}
+p:
+file.close();
+file1.close();
+remove("info.txt");
+rename("info1.txt", "info.txt");
+}
+void read() //Function to read all data which is already stored in file.
+{
+fstream file;
+file.open("info.txt", ios::in);
+file >> firstname >> lastname >> country >> gender >> CNIC >> email >>
+currentteam >> personalcoach;
+while (!file.eof())
+{
+cout << "\n\nFirst name= " << firstname;
+cout << "\nLast name= " << lastname;
+cout << "\nCNIC= " << CNIC;
+cout << "\nGender= " << gender;
+cout << "\nE-mail= " << email;
+cout << "\nCurrent team= " << currentteam;
+cout << "\nPersonal coach= " << personalcoach;
+cout << endl;
+file >> firstname >> lastname >> country >> gender >> CNIC >> email
+>> currentteam >> personalcoach;
+}
+file.close();
+}
+}; //end of class database.
+class menu : public database
+{
+public:
+void choicemenu() //Function for displaying options and perform requested task.
+{s
+choose:
+int choice;
+char x;
+cout << "\t\t\t---------------------------\n";
+cout << "\t\t\tChoose Option:[1/2/3/4/5/6/7]\n";
+cout << "\t\t\t---------------------------\n";
+cout << "\t\t\t 1. Enter Information\n"; //user will enter data as per his
+needs.
+cout << "\t\t\t 2. Display Information\n"; //only entered data from user
+will be displayed.
+cout << "\t\t\t 3. Modify Information\n"; //data will be modified by
+checking CNIC(unique number)
+cout << "\t\t\t 4. Search Information\n"; //sportsmen data will be searched
+according to CNIC(unique number)
+cout << "\t\t\t 5. Delete Information\n";
+cout << "\t\t\t 6. Read Information\n"; //whole data stored in file will be
+read.
+cout << "\t\t\t 7. Exit\n";
+cout << "Enter Your Choice: ";
+cin >> choice;
+switch (choice)
+{
+case 1:
+do
+{
+info::input();
+cout << "\n\t\t\t Add Another Sportsmen Record (Y,N): ";
+cin >> x;
+} while (x == 'y' || x == 'Y');
+break;
+case 2:
+info::print();
+break;
+case 3:
+modify();
+break;
+case 4:
+search();
+break;
+case 5:
+del();
+break;
+case 6:
+read();
+break;
+case 7:
+cout << "DONT FORGET TO RATE US 5 STARS :)\n\n";
+exit(0);
+default:
+cout << "\n\t\t\t Invalid choice...Press 1 to 7";
+}
+goto choose; //after every option is choosen menu is displayed again.
+}
+}; //end of class shoicemenu.
+void main()
+{
+//creating objects
+info s;
+menu m;
+//calling functions
+s.account();
+m.choicemenu();
+_getch();
+}
