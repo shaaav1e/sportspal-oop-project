@@ -1,4 +1,7 @@
+University Project for OOP - Got Selected in ProjectGala - 2nd Semester - done in C++
+
 Sports Pal is a search engine for sportsmen. 
+
 --Firstly, the user will be asked to enter his email and Date of birth to continue. 
 --Then the user will be given 7 choices and based on his needs he will select an option.
 --First option is the Enter information in which the user will enter information about a Sportsmen which will be stored in a file. 
